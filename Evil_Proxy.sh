@@ -1,0 +1,1 @@
+mitmweb --mode regular --showhost --set confdir=Certs/ --set block_global=false --set block_private=false --set web_password=1234 --proxyauth="proxy:112233" --web-host 0.0.0.0 --web-port 8081 --no-web-open-browser --scripts Scripts/script.py --set view_filter='!(~c 407)'
