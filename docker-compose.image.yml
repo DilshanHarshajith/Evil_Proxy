@@ -1,0 +1,20 @@
+services:
+  mitmproxy:
+    build: .
+    container_name: Evil_Proxy
+    ports:
+      - "8080:8080" # Proxy port
+      - "8081:8081" # Web interface port
+    volumes:
+      - ./Data:/home/mitmproxy/Data
+      # - ./Certs:/home/mitmproxy/.mitmproxy # Optional: Use custom certs dir
+      # Command is handled by entrypoint.sh using environment variables
+    environment:
+      - WEBPASSWORD=1234
+      # - PROXYAUTH=user:pass
+      - SHOWHOST=true
+      - BLOCK_GLOBAL=false
+      - BLOCK_PRIVATE=false
+      - CONFDIR=/home/mitmproxy/Data/certs # Explicitly showing the default behavior
+    restart: unless-stopped
+    network_mode: bridge
