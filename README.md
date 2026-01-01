@@ -13,8 +13,9 @@ A powerful interception proxy built on **mitmproxy** for advanced traffic analys
 - **🌐 Web Interface**: Built-in mitmweb interface for visual traffic inspection (Port 8081)
 
 ### Management & Deployment
+- **🎯 Management Console**: Interactive, all-in-one management interface (`manage.sh`)
 - **🐳 Docker Ready**: Fully containerized with Docker Compose for one-command deployment
-- **⚙️ Management Scripts**: Comprehensive bash scripts for all common operations
+- **⚙️ Individual Scripts**: Standalone bash scripts for automation and scripting
 - **🔧 Configurable**: Extensive configuration options via environment variables and config files
 - **📝 Detailed Logging**: Debug logs and status tracking for troubleshooting
 
@@ -46,6 +47,30 @@ This will create:
 - `Data/Other/` - Logs and blocklists
 - `Certs/` - SSL certificate storage
 
+## ⚡ Quick Start
+
+Get Evil_Proxy running in seconds with the interactive management console:
+
+```bash
+# 1. Make the management console executable
+chmod +x manage.sh
+
+# 2. Launch the console
+./manage.sh
+
+# 3. Select option 1 to start services
+# 4. Access the web interface at http://localhost:8081 (password: 1234)
+# 5. Configure your browser/device to use proxy: localhost:8080
+```
+
+**That's it!** The management console provides an intuitive menu for all operations including:
+- Starting/stopping services
+- Viewing logs and status
+- Managing blocked IPs
+- Viewing captured traffic
+- Cleaning up old data
+
+
 ## 📖 Usage
 
 ### Docker Deployment (Recommended)
@@ -68,9 +93,34 @@ docker compose down
 - Proxy Port: `8080`
 - Web Interface: `8081`
 
-### Management Scripts
+### Management Console (Recommended)
 
-All management scripts are located in `ManageScripts/`:
+The **consolidated management console** (`manage.sh`) provides an interactive interface for all proxy operations:
+
+```bash
+chmod +x manage.sh
+./manage.sh
+```
+
+**Features:**
+- 🚀 **Service Management**: Start, stop, check status, and view logs
+- 📊 **Traffic Management**: View captured traffic and cleanup old data
+- 🛡️ **IP Management**: Block, unblock, and manage IP blocklist
+- 🎨 **Interactive Menu**: User-friendly console interface with color-coded output
+
+**Main Menu Options:**
+1. Start Services
+2. Stop Services
+3. Service Status
+4. View Live Logs
+5. View Captured Traffic
+6. Cleanup Old Captures
+7. IP Management (Block/Unblock)
+0. Exit
+
+### Individual Management Scripts (Alternative)
+
+For scripting or automation, individual scripts are available in `ManageScripts/`:
 
 | Script | Purpose |
 |--------|---------|
@@ -207,7 +257,7 @@ Evil_Proxy/
 │   ├── token_extractor.py     # Token extraction logic
 │   ├── ip_blocker.py          # IP blocking logic
 │   └── utils.py               # Utility functions
-├── ManageScripts/              # Bash management utilities
+├── ManageScripts/              # Individual bash management utilities
 │   ├── start.sh               # Start proxy
 │   ├── stop.sh                # Stop proxy
 │   ├── status.sh              # Check status
@@ -221,6 +271,7 @@ Evil_Proxy/
 │   └── Other/                 # Logs and blocklists
 ├── Certs/                      # SSL certificates (created by prepare.sh)
 ├── Transparent/                # Transparent proxy mode files
+├── manage.sh                   # 🎯 Consolidated management console (RECOMMENDED)
 ├── Evil_Proxy.sh               # Standalone startup script
 ├── prepare.sh                  # Environment setup script
 ├── entrypoint.sh               # Docker entrypoint script
