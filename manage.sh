@@ -77,7 +77,7 @@ check_dependencies() {
         missing=1
     fi
     if ! command -v docker &> /dev/null; then
-        echo -e "${RED}Error: 'docker' is not installed. Service management will not work.${NC}"
+        echo -e "${RED}Error: 'docker' is not installed. Management will not work.${NC}"
         missing=1
     fi
     
@@ -86,10 +86,10 @@ check_dependencies() {
     fi
 }
 
-# --- Service Management ---
+# --- Management ---
 
-start_services() {
-    echo -e "${GREEN}Starting mitmproxy services...${NC}"
+start() {
+    echo -e "${GREEN}Starting mitmproxy ...${NC}"
     if [ -f "$COMPOSE_FILE" ]; then
         docker compose -f "$COMPOSE_FILE" up -d
     else
@@ -98,26 +98,26 @@ start_services() {
     fi
     
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✓ Services started.${NC}"
+        echo -e "${GREEN}✓ Started.${NC}"
     else
-        echo -e "${RED}✗ Failed to start services.${NC}"
+        echo -e "${RED}✗ Failed to start.${NC}"
     fi
     wait_for_key
 }
 
-stop_services() {
-    echo -e "${YELLOW}Stopping mitmproxy services...${NC}"
+stop() {
+    echo -e "${YELLOW}Stopping mitmproxy ...${NC}"
     if [ -f "$COMPOSE_FILE" ]; then
         docker compose -f "$COMPOSE_FILE" down
     else
         docker compose down
     fi
-    echo -e "${GREEN}✓ Services stopped.${NC}"
+    echo -e "${GREEN}✓ stopped.${NC}"
     wait_for_key
 }
 
-service_status() {
-    echo -e "${BLUE}=== Service Status ===${NC}"
+status() {
+    echo -e "${BLUE}=== Status ===${NC}"
     if [ -f "$COMPOSE_FILE" ]; then
         docker compose -f "$COMPOSE_FILE" ps
     else
@@ -366,9 +366,9 @@ check_dependencies
 
 while true; do
     print_header
-    echo "1. Start Services"
-    echo "2. Stop Services"
-    echo "3. Service Status"
+    echo "1. Start"
+    echo "2. Stop"
+    echo "3. Status"
     echo "4. View Live Logs"
     echo "------------------------"
     echo "5. View Captured Traffic"
@@ -381,9 +381,9 @@ while true; do
     read -p "Select an option: " choice
     
     case "$choice" in
-        1) start_services ;;
-        2) stop_services ;;
-        3) service_status ;;
+        1) start ;;
+        2) stop ;;
+        3) status ;;
         4) view_logs ;;
         5) view_traffic ;;
         6) cleanup_captures ;;
